@@ -1,0 +1,13 @@
+[Config]
+MainTitle=MainTitle
+SubTitle=SubTitle
+
+[Network]
+LocalIp=127.0.0.1
+LocalPort=9000
+RemoteIp=127.0.0.1
+RemotePort=9001
+
+[App]
+InstanceId=InstanceA
+
