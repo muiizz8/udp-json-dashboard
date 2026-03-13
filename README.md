@@ -81,6 +81,10 @@ Names=InstanceA, InstanceB
 
 Contributions are welcome! Please feel free to submit a Pull Request or open an issue for any bugs or feature requests.
 
+## 🎖️ Credits
+
+Special thanks to **[@uxmanz](https://github.com/uxmanz)** for creating the **Base Model UI ViewPanels**. His template significantly streamlined the development process, allowing for easy expansion and customization of the dashboard components.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
