@@ -5,6 +5,8 @@ A professional, cross-platform telemetry dashboard built with **Avalonia UI** an
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)
 ![AvaloniaUI](https://img.shields.io/badge/AvaloniaUI-11.3-red.svg)
+![ModelUI](https://github.com/uxmanz/ModelUI)
+
 
 ## 🚀 Key Features
 
@@ -80,6 +82,10 @@ Names=InstanceA, InstanceB
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request or open an issue for any bugs or feature requests.
+
+## 🎖️ Credits
+
+Special thanks to **[@uxmanz](https://github.com/uxmanz)** for creating the **Base Model UI**. This template significantly streamlined the development process, allowing for easy expansion and customization of the dashboard components.
 
 ## 📄 License
 
