@@ -6,6 +6,17 @@ A professional, cross-platform telemetry dashboard built with **Avalonia UI** an
 ![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)
 ![AvaloniaUI](https://img.shields.io/badge/AvaloniaUI-11.3-red.svg)
 
+## 🎥 Demo
+
+> [!TIP]
+> To add a video here, simply drag and drop your `.mp4`, `.mov`, or `.webm` file directly into the GitHub editor while editing this README, or use the following syntax if you have a URL:
+>
+> ```markdown
+> [![](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+> ```
+
+---
+
 ## 🚀 Key Features
 
 - **Real-time Telemetry:** Seamlessly send and receive telemetry data via UDP.
