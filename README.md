@@ -10,7 +10,7 @@ A professional, cross-platform telemetry dashboard built with **Avalonia UI** an
 
 - **Real-time Telemetry:** Seamlessly send and receive telemetry data via UDP.
 - **Multi-Instance Management:** Easily configure and switch between different network profiles (Local/Remote IP and Ports).
-- **Integrated JSON Editor:** Edit telemetry payloads with a built-in editor featuring validation.
+- **Flexible JSON Editor:** Edit telemetry payloads with a built-in editor using string literals for maximum flexibility, bypassing the need for fixed data classes.
 - **Comprehensive Logging:** View incoming (RX) and outgoing (TX) messages with timestamps and endpoint details.
 - **Persistent Configuration:** All settings are stored in an organized `Config.inf` file for easy portability.
 - **Modern UI/UX:** Leveraging **Actipro Software** controls and **Avalonia UI** for a high-performance, themed user experience.
