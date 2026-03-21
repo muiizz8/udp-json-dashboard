@@ -5,14 +5,21 @@ A professional, cross-platform telemetry dashboard built with **Avalonia UI** an
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![.NET](https://img.shields.io/badge/.NET-9.0-purple.svg)
 ![AvaloniaUI](https://img.shields.io/badge/AvaloniaUI-11.3-red.svg)
-![ModelUI](https://github.com/uxmanz/ModelUI)
 
+## 🎥 Demo
+
+
+https://github.com/user-attachments/assets/df0cef9c-ba75-4b53-8a8b-bd483e303150
+
+
+
+---
 
 ## 🚀 Key Features
 
 - **Real-time Telemetry:** Seamlessly send and receive telemetry data via UDP.
 - **Multi-Instance Management:** Easily configure and switch between different network profiles (Local/Remote IP and Ports).
-- **Integrated JSON Editor:** Edit telemetry payloads with a built-in editor featuring validation.
+- **Flexible JSON Editor:** Edit telemetry payloads with a built-in editor using string literals for maximum flexibility, bypassing the need for fixed data classes.
 - **Comprehensive Logging:** View incoming (RX) and outgoing (TX) messages with timestamps and endpoint details.
 - **Persistent Configuration:** All settings are stored in an organized `Config.inf` file for easy portability.
 - **Modern UI/UX:** Leveraging **Actipro Software** controls and **Avalonia UI** for a high-performance, themed user experience.
@@ -85,7 +92,7 @@ Contributions are welcome! Please feel free to submit a Pull Request or open an 
 
 ## 🎖️ Credits
 
-Special thanks to **[@uxmanz](https://github.com/uxmanz)** for creating the **Base Model UI**. This template significantly streamlined the development process, allowing for easy expansion and customization of the dashboard components.
+Special thanks to **[@uxmanz](https://github.com/uxmanz)** for creating the **Base Model UI ViewPanels**. His template significantly streamlined the development process, allowing for easy expansion and customization of the dashboard components.
 
 ## 📄 License
 
