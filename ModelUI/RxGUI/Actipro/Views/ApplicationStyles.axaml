@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
 	>
-	
+
 	<Styles.Resources>
 
 		<x:Double x:Key="SampleWideMaxWidth">1350</x:Double>
@@ -13,6 +13,76 @@
 
 	</Styles.Resources>
 
+	<!-- App window baseline -->
+	<Style Selector="Window.app-window">
+		<Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI" />
+		<Setter Property="FontSize" Value="13" />
+	</Style>
+	<Style Selector="Window.app-window">
+		<Setter Property="Background">
+			<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+				<GradientStop Color="#F7F9FC" Offset="0" />
+				<GradientStop Color="#EEF2F9" Offset="1" />
+			</LinearGradientBrush>
+		</Setter>
+		<Setter Property="TextElement.Foreground" Value="#101828" />
+	</Style>
+
+	<!-- Cards / surfaces -->
+	<Style Selector="Border.card">
+		<Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}" />
+		<Setter Property="BorderBrush" Value="{actipro:ThemeResource Container1BorderBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="{actipro:ScaledCornerRadius 2}" />
+		<Setter Property="Padding" Value="{actipro:ScaledThickness 12}" />
+		<Setter Property="BoxShadow" Value="0 10 26 0 #1A000000" />
+	</Style>
+
+	<Style Selector="Border.sidebar-surface">
+		<Setter Property="Background" Value="{actipro:ThemeResource Container2BackgroundBrush}" />
+		<Setter Property="BorderBrush" Value="{actipro:ThemeResource Container2BorderBrush}" />
+		<Setter Property="BorderThickness" Value="0,0,1,0" />
+	</Style>
+
+	<!-- Typography helpers -->
+	<Style Selector="TextBlock.section-title">
+		<Setter Property="FontSize" Value="16" />
+		<Setter Property="FontWeight" Value="SemiBold" />
+	</Style>
+	<Style Selector="TextBlock.section-subtitle">
+		<Setter Property="FontSize" Value="12" />
+		<Setter Property="Foreground" Value="#667085" />
+	</Style>
+	<Style Selector="TextBlock.h2">
+		<Setter Property="FontSize" Value="15" />
+		<Setter Property="FontWeight" Value="SemiBold" />
+	</Style>
+
+	<!-- Buttons -->
+	<Style Selector="Button">
+		<Setter Property="MinHeight" Value="34" />
+		<Setter Property="Padding" Value="14,6" />
+	</Style>
+
+	<!-- Sidebar navigation -->
+	<Style Selector="ListBox.nav-list">
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Padding" Value="0" />
+	</Style>
+	<Style Selector="ListBoxItem.nav-item">
+		<Setter Property="Margin" Value="0,0,0,6" />
+		<Setter Property="Padding" Value="10,8" />
+		<Setter Property="CornerRadius" Value="{actipro:ScaledCornerRadius 1}" />
+		<Setter Property="Background" Value="Transparent" />
+	</Style>
+	<Style Selector="ListBoxItem.nav-item:pointerover">
+		<Setter Property="Background" Value="#EEF2FF" />
+	</Style>
+	<Style Selector="ListBoxItem.nav-item:selected">
+		<Setter Property="Background" Value="#E0E7FF" />
+		<Setter Property="FontWeight" Value="SemiBold" />
+	</Style>
 
 	<!-- Control.sample-presenter -->
 	<Style Selector=":is(Control).sample-presenter">

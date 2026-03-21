@@ -9,11 +9,7 @@
 	x:Class="RxGUI.Views.LogView">
 	<Grid RowDefinitions="3*,2*" Margin="8" RowSpacing="8">
 		<Grid ColumnDefinitions="2*,3*" ColumnSpacing="8">
-			<Border Background="{actipro:ThemeResource Container2BackgroundBrush}"
-                    BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{actipro:ScaledCornerRadius 1.5}"
-                    Padding="{actipro:ScaledThickness 6}">
+			<Border Classes="card">
 				<DockPanel>
 					<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="6">
 						<TextBlock Classes="h2" Text="Logs" />
@@ -33,12 +29,7 @@
 				</DockPanel>
 			</Border>
 
-			<Border Grid.Column="1"
-                    Background="{actipro:ThemeResource Container2BackgroundBrush}"
-                    BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{actipro:ScaledCornerRadius 1.5}"
-                    Padding="{actipro:ScaledThickness 6}">
+			<Border Grid.Column="1" Classes="card">
 				<DockPanel>
 					<TextBlock DockPanel.Dock="Top" Classes="h2" Text="Payload" />
 					<TextBox Text="{Binding SelectedJson}"
@@ -52,11 +43,7 @@
 		</Grid>
 
 		<Border Grid.Row="1"
-                Background="{actipro:ThemeResource Container2BackgroundBrush}"
-                BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
-                BorderThickness="1"
-                CornerRadius="{actipro:ScaledCornerRadius 1.5}"
-                Padding="{actipro:ScaledThickness 6}"
+                Classes="card"
                 MinHeight="220">
 			<Grid RowDefinitions="Auto,*" RowSpacing="6">
 				<StackPanel Orientation="Horizontal" Spacing="6">

@@ -10,7 +10,7 @@
         Width="860" Height="590"
         WindowStartupLocation="CenterScreen"
         Icon="avares://RxGUI/Assets/main.ico"
-        Classes="sample-presenter"
+        Classes="sample-presenter app-window"
         Title="">
 	<Window.Styles>
 		<Style Selector="TextBlock.h1">
@@ -138,53 +138,52 @@
 				<actipro:WindowResizeGrip Grid.Column="2" />
 			</Grid>
 		</Border>
-		<Border  Background="Transparent" BorderBrush="{actipro:ThemeResource Container2BorderBrush}" BorderThickness="0,1,0,0">
+		<Border Background="Transparent" BorderBrush="{actipro:ThemeResource Container2BorderBrush}" BorderThickness="0,1,0,0">
 			<SplitView x:Name="splitView" DisplayMode="Inline" IsPaneOpen="False" OpenPaneLength="236" PanePlacement="Left">
 				<SplitView.Pane>
-					<StackPanel Orientation="Vertical">
-						<ListBox SelectionChanged="SelectingItemsControl_OnSelectionChanged">
-							<StackPanel HorizontalAlignment="Center">
-								<Image x:Name="viewImageConnection" DockPanel.Dock="Left" Width="60" Height="60" Source="/Assets/main_256.png" VerticalAlignment="Center" IsHitTestVisible="False">
+					<Border Classes="sidebar-surface" Padding="14">
+						<StackPanel Spacing="14">
+							<StackPanel HorizontalAlignment="Center" Spacing="6">
+								<Image x:Name="viewImageConnection" DockPanel.Dock="Left" Width="56" Height="56" Source="/Assets/main_256.png" VerticalAlignment="Center" IsHitTestVisible="False">
 									<Image.Effect>
-										<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
+										<DropShadowEffect OffsetX="0" OffsetY="2" BlurRadius="6" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
 									</Image.Effect>
 								</Image>
-								<TextBlock Name="sidebarTitleTextBlock"	HorizontalAlignment="Center"
-                                    FontSize="18"
-                                    FontWeight="DemiBold"
-                                    Text="RxGUI" />
-								<TextBlock	 HorizontalAlignment="Center"
-                                               FontSize="12" Name="ConnectionAstStatusTextBlock"
-                                               FontWeight="Thin"
-                                               Margin="3,1,0,0"
-                                               Text="Status : Active" />
+								<TextBlock Name="sidebarTitleTextBlock"
+								           HorizontalAlignment="Center"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Text="RxGUI" />
+								<TextBlock HorizontalAlignment="Center"
+                                           Classes="section-subtitle"
+                                           Name="ConnectionAstStatusTextBlock"
+                                           Text="Status : Active" />
 							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Image x:Name="viewImag2e" Source="/Assets/main_256.png" DockPanel.Dock="Left" Width="24" Height="24" VerticalAlignment="Center" IsHitTestVisible="False">
-									<Image.Effect>
-										<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
-									</Image.Effect>
-								</Image>
-								<TextBlock Text="Main View" FontSize="20" Margin="10"></TextBlock>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Image  Source="/Assets/main_256.png" DockPanel.Dock="Left" Width="24" Height="24" VerticalAlignment="Center" IsHitTestVisible="False">
-									<Image.Effect>
-										<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
-									</Image.Effect>
-								</Image>
-								<TextBlock Text="Delta View" FontSize="20" Margin="10"></TextBlock>
-							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<Image  Source="/Assets/main_256.png" DockPanel.Dock="Left" Width="24" Height="24" VerticalAlignment="Center" IsHitTestVisible="False">
-									<Image.Effect>
-										<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
-									</Image.Effect>
-								</Image>
-								<TextBlock Text="Log View" FontSize="20" Margin="10"></TextBlock>
-							</StackPanel>
-						</ListBox>
-					</StackPanel>
+							<Separator />
+							<ListBox Classes="nav-list" SelectedIndex="0" SelectionChanged="SelectingItemsControl_OnSelectionChanged">
+								<ListBoxItem Classes="nav-item" Tag="MainView">
+									<Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+										<Image x:Name="viewImag2e" Source="/Assets/main_256.png" Width="22" Height="22" VerticalAlignment="Center" IsHitTestVisible="False">
+											<Image.Effect>
+												<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
+											</Image.Effect>
+										</Image>
+										<TextBlock Grid.Column="1" Text="Main View" FontSize="15" VerticalAlignment="Center" />
+									</Grid>
+								</ListBoxItem>
+								<ListBoxItem Classes="nav-item" Tag="LogView">
+									<Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+										<Image Source="/Assets/main_256.png" Width="22" Height="22" VerticalAlignment="Center" IsHitTestVisible="False">
+											<Image.Effect>
+												<DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
+											</Image.Effect>
+										</Image>
+										<TextBlock Grid.Column="1" Text="Log View" FontSize="15" VerticalAlignment="Center" />
+									</Grid>
+								</ListBoxItem>
+							</ListBox>
+						</StackPanel>
+					</Border>
 				</SplitView.Pane>
 				<!-- NOTE: Remove custom transition class and switch back to PageSlide once TransitioningContentControl has a direction property that can be bound to ViewTransitionForward -->
 				<TransitioningContentControl x:Name="transitionControl" >

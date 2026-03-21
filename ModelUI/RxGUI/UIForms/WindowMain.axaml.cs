@@ -26,16 +26,12 @@ public partial class WindowMain : Window
     /// <summary>
     /// Main view instance displayed by default.
     /// </summary>
-    public MainView MainView;
+    public MainView MainView = new MainView();
 
-    /// <summary>
-    /// Delta view instance for comparison or alternate view.
-    /// </summary>
-    public DeltaView DeltaView;
     /// <summary>
     /// Log view instance to show logs and debug output.
     /// </summary>
-    public LogView LogView;
+    public LogView LogView = new LogView();
 
     public DatabaseHelper databaseHelper = new DatabaseHelper();
 
@@ -53,13 +49,8 @@ public partial class WindowMain : Window
         titleTextBlock.Text = Globals.MainTitle;
         subtitleTextBlock.Text = Globals.SubTitle;
 
-        MainView = new MainView();
         MainView.MainContext(this);
 
-        DeltaView = new DeltaView();
-        DeltaView.MainContext(this);
-
-        LogView = new LogView();
         LogView.DataContext = MainView.DataContext;
 
         transitionControl.Content = MainView; // Set initial view
@@ -98,21 +89,34 @@ public partial class WindowMain : Window
     /// </summary>
     private void SelectingItemsControl_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        // NOTE: This can be made more robust by avoiding casting UI elements directly.
-        var rx = (TextBlock)(((StackPanel)(((ListBox)sender).SelectedItems[0])).Children[1]);
+        if (sender is not ListBox list)
+            return;
+        if (transitionControl is null)
+            return;
 
-        if (rx.Text.Contains("Main View"))
-        {
+        object? selectedItem = null;
+        if (e.AddedItems is { Count: > 0 })
+            selectedItem = e.AddedItems[0];
+        else
+            selectedItem = list.SelectedItem;
+
+        if (selectedItem is null)
+            return;
+
+        string? viewKey = null;
+
+        if (selectedItem is ListBoxItem listBoxItem)
+            viewKey = listBoxItem.Tag?.ToString();
+        else if (selectedItem is StackPanel stackPanel && stackPanel.Children.Count > 1 && stackPanel.Children[1] is TextBlock label)
+            viewKey = label.Text;
+
+        if (string.IsNullOrWhiteSpace(viewKey))
+            return;
+
+        if (viewKey.Contains("Main View", StringComparison.OrdinalIgnoreCase) || viewKey.Equals("MainView", StringComparison.OrdinalIgnoreCase))
             transitionControl.Content = MainView;
-        }
-        else if (rx.Text.Contains("Delta View"))
-        {
-            transitionControl.Content = DeltaView;
-        }
-        else if (rx.Text.Contains("Log View"))
-        {
+        else if (viewKey.Contains("Log View", StringComparison.OrdinalIgnoreCase) || viewKey.Equals("LogView", StringComparison.OrdinalIgnoreCase))
             transitionControl.Content = LogView;
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

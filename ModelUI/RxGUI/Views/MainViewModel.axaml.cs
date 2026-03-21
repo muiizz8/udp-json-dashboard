@@ -159,9 +159,8 @@ public sealed class MainViewModel : INotifyPropertyChanged
         if (!EnsureTcpReady("send JSON"))
             return;
 
-        var data = token.ToObject<TelemetryData>() ?? new TelemetryData();
-
-        Udp.Send(data);
+        string jsonString = JsonConvert.SerializeObject(token, Formatting.Indented);
+        Udp.Send(jsonString);
         NotifyInfo("Telemetry JSON sent.", "Send JSON");
 
         Logs.Add(new LogEntry
@@ -169,7 +168,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
             TimeStampUtc = DateTime.UtcNow,
             Direction = "TX",
             Remote = SelectedInstance == null ? "" : $"{SelectedInstance.RemoteIp}:{SelectedInstance.RemotePort}",
-            Json = JsonConvert.SerializeObject(data, Formatting.Indented)
+            Json = jsonString
         });
     }
 
@@ -206,9 +205,8 @@ public sealed class MainViewModel : INotifyPropertyChanged
         );
         AddDebug($"UDP service ready. Local={SelectedInstance.LocalIp}:{parsedLocalPort} Remote={SelectedInstance.RemoteIp}:{parsedRemotePort}");
 
-        Udp.MessageReceived += (data, remote) =>
+        Udp.MessageReceived += (json, remote) =>
         {
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             Dispatcher.UIThread.Post(() =>
             {
                 Logs.Add(new LogEntry
@@ -217,19 +215,6 @@ public sealed class MainViewModel : INotifyPropertyChanged
                     Direction = "RX",
                     Remote = remote,
                     Json = json
-                });
-            });
-        };
-        Udp.MessageReceivedRaw += (raw, remote) =>
-        {
-            Dispatcher.UIThread.Post(() =>
-            {
-                Logs.Add(new LogEntry
-                {
-                    TimeStampUtc = DateTime.UtcNow,
-                    Direction = "RX",
-                    Remote = remote,
-                    Json = raw
                 });
             });
         };

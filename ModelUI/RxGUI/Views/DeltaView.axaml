@@ -9,35 +9,31 @@
 		<DockPanel>
 			<TabControl>
 				<TabItem IsVisible="True">
-					<TabItem.Header>
-						<TextBlock VerticalAlignment="Top" FontSize="18">DeltaView</TextBlock>
-					</TabItem.Header>
-					<DockPanel>
+				<TabItem.Header>
+						<TextBlock VerticalAlignment="Top" FontSize="16" FontWeight="SemiBold">Delta</TextBlock>
+				</TabItem.Header>
+				<DockPanel>
                         <ScrollViewer>
                             <StackPanel Orientation="Vertical" >
-                                <Border Background="{actipro:ThemeResource Container2BackgroundBrush}" BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
-                                        BorderThickness="1"    Margin="4"
-                                        CornerRadius="{actipro:ScaledCornerRadius 1.5}"
-                                        Padding="{actipro:ScaledThickness 5}"
+                                <Border Classes="card"
+                                        Margin="8"
                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Classes="h3" Margin="5,0,0,15">Delta View</TextBlock>
+                                        <TextBlock Classes="section-title" Margin="0,0,0,10">Delta View</TextBlock>
                                         <StackPanel  Orientation="Vertical" VerticalAlignment="Center"  >
-                                            <TextBlock  FontSize="12" Text="Total Active Users: 0" VerticalAlignment="Center"/>
-                                            <TextBlock FontSize="12" Text="List:" VerticalAlignment="Center"/>
+                                            <TextBlock Classes="section-subtitle" Text="Total Active Users: 0" VerticalAlignment="Center"/>
+                                            <TextBlock Classes="section-subtitle" Text="List:" VerticalAlignment="Center"/>
 
                                         </StackPanel>
 
                                     </StackPanel>
                                 </Border>
 
-                                <Border Background="{actipro:ThemeResource Container2BackgroundBrush}" BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
-                                        BorderThickness="1"    Margin="4"
-                                        CornerRadius="{actipro:ScaledCornerRadius 1.5}"
-                                        Padding="{actipro:ScaledThickness 5}"
+                                <Border Classes="card"
+                                        Margin="8"
                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Classes="h3" Margin="5,0,0,15">Settings</TextBlock>
+                                        <TextBlock Classes="section-title" Margin="0,0,0,10">Settings</TextBlock>
                                         <TextBlock Text="Time: ??" VerticalAlignment="Center" FontSize="14" />
                                     </StackPanel>
                                 </Border>

@@ -18,8 +18,7 @@ public sealed class UdpMessagingService
     private readonly UdpJsonClient client;
 
     public event Action<string>? Debug;
-    public event Action<TelemetryData, string>? MessageReceived;
-    public event Action<string, string>? MessageReceivedRaw;
+    public event Action<string, string>? MessageReceived;
 
     /// <summary>
     /// Initializes the UDP server and client endpoints.
@@ -37,9 +36,8 @@ public sealed class UdpMessagingService
     /// <summary>Connects the TCP client asynchronously.</summary>
 
     /// <summary>Sends telemetry data as JSON.</summary>
-    public void Send(TelemetryData data)
+    public void Send(string json)
     {
-        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
         client.SendAsync(json);
         Debug?.Invoke($"Sent telemetry (UDP)");
     }
@@ -66,16 +64,12 @@ public sealed class UdpMessagingService
                 if (text.Length == 0)
                     return;
 
-                var data = JsonConvert.DeserializeObject<TelemetryData>(text);
-                if (data != null)
-                    parent.MessageReceived?.Invoke(data, endpoint.ToString() ?? "Unknown");
-                else
-                    parent.MessageReceivedRaw?.Invoke(text, endpoint.ToString() ?? "Unknown");
+                parent.MessageReceived?.Invoke(text, endpoint.ToString() ?? "Unknown");
             }
             catch (Exception ex)
             {
-                parent.Debug?.Invoke($"Invalid JSON: {ex.Message}");
-                parent.MessageReceivedRaw?.Invoke(text, endpoint.ToString() ?? "Unknown");
+                parent.Debug?.Invoke($"Error processing message: {ex.Message}");
+                parent.MessageReceived?.Invoke(text, endpoint.ToString() ?? "Unknown");
             }
             finally
             {
