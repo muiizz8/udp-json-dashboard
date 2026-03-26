@@ -9,6 +9,8 @@ using RxGUI.Common;
 using RxGUI.Network;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.Json.Serialization;
+using RxGUI.Views;
 
 namespace RxGUI.Views;
 
@@ -57,23 +59,21 @@ public sealed class MainViewModel : INotifyPropertyChanged
         set { selectedJson = value; OnPropertyChanged(); }
     }
 
-    private string jsonEditorText = @"{
-  ""m_airborneInd"": false,
-  ""m_hour"": 0,
-  ""m_minute"": 0,
-  ""m_vcs"": """",
-  ""m_srcTN"": 418,
-  ""m_latitude"": 33.03,
-  ""m_longitude"": 73.64,
-  ""m_altitude"": 600.0,
-  ""m_course"": 21.0,
-  ""m_speed"": 0.0
-}";
-    public string JsonEditorText
+public class TelemetryData
     {
-        get => jsonEditorText;
-        set { jsonEditorText = value; OnPropertyChanged(); }
-    }
+        public bool m_airborneInd { get; set; }
+        public int m_hour { get; set; }
+        public int m_minute { get; set; }
+        public string m_vcs { get; set; }
+        public int m_srcTN { get; set; }
+        public double m_latitude { get; set; }
+        public double m_longitude { get; set; }
+        public double m_altitude { get; set; }
+        public double m_course { get; set; }
+        public double m_speed { get; set; }
+}
+   
+   
 
     public MainViewModel()
     {
@@ -92,6 +92,7 @@ public sealed class MainViewModel : INotifyPropertyChanged
         Udp.StartServer();
         isServerRunning = true;
         NotifyInfo("Server started.", "Server");
+        SelectedJson = JsonConvert.SerializeObject(new TelemetryData());
     }
     /// <summary>Stops the local TCP server.</summary>
     public void StopServer()
@@ -148,18 +149,22 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
     public void SendJson()
     {
-        // Validate JSON editor content
-        if (!TryParseJson(JsonEditorText, out var token))
-        {
-            AddDebug("Send failed: JSON is invalid.");
-            NotifyError("Send failed: JSON is invalid.", "Send JSON");
-            return;
-        }
-
+        TelemetryData token = new TelemetryData(){
+            m_airborneInd = true,
+            m_hour = 0,
+            m_minute = 0,
+            m_vcs = "123",
+            m_srcTN = 0,
+            m_latitude = 33.333,
+            m_longitude = 73.333,
+            m_altitude = 10000,
+            m_course = 0,
+            m_speed = 0
+        };
         if (!EnsureTcpReady("send JSON"))
             return;
 
-        string jsonString = JsonConvert.SerializeObject(token, Formatting.Indented);
+        string jsonString = JsonConvert.SerializeObject(token);
         Udp.Send(jsonString);
         NotifyInfo("Telemetry JSON sent.", "Send JSON");
 
@@ -207,6 +212,9 @@ public sealed class MainViewModel : INotifyPropertyChanged
 
         Udp.MessageReceived += (json, remote) =>
         {
+            var telem=JsonConvert.DeserializeObject<TelemetryData>(json);
+            telem.m_vcs="modified";
+
             Dispatcher.UIThread.Post(() =>
             {
                 Logs.Add(new LogEntry
@@ -214,8 +222,9 @@ public sealed class MainViewModel : INotifyPropertyChanged
                     TimeStampUtc = DateTime.UtcNow,
                     Direction = "RX",
                     Remote = remote,
-                    Json = json
+                    Json = JsonConvert.SerializeObject(telem)
                 });
+
             });
         };
 

@@ -76,7 +76,7 @@
                                  TextWrapping="Wrap"
                                  FontFamily="Consolas"
                                  Watermark="Paste or craft JSON to send."
-                                 MinHeight="320" />
+                                 MinHeight="320" x:Name="TextEditor" />
 						<Button Grid.Row="2" Classes="theme-solid accent" Content="Send JSON" Click="SendJson_Click" />
 					</Grid>
 				</Border>
