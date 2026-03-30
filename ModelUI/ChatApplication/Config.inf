@@ -1,0 +1,27 @@
+[Config]
+MainTitle=RXGUI_Application
+SubTitle=RXGUI
+
+[Network]
+LocalIp=127.0.0.1
+LocalPort=9000
+RemoteIp=127.0.0.1
+RemotePort=9001
+
+[App]
+InstanceId=InstanceA
+
+[Instances]
+Names=InstanceA, InstanceB
+
+[InstanceA]
+LocalIp=127.0.0.1
+LocalPort=9000
+RemoteIp=127.0.0.1
+RemotePort=9001
+
+[InstanceB]
+LocalIp=127.0.0.1
+LocalPort=9001
+RemoteIp=127.0.0.1
+RemotePort=9000
