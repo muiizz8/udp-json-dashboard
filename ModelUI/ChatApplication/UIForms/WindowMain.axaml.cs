@@ -5,16 +5,10 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Database;
-using HarmonyLib;
 using ChatApplication.Views;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace ChatApplication;
 
@@ -23,16 +17,6 @@ namespace ChatApplication;
 /// </summary>
 public partial class WindowMain : Window
 {
-    /// <summary>
-    /// Main view instance displayed by default.
-    /// </summary>
-    public MainView MainView = new MainView();
-
-    /// <summary>
-    /// Log view instance to show logs and debug output.
-    /// </summary>
-    public LogView LogView = new LogView();
-
     /// <summary>
     /// Chat view instance for machine-to-machine messaging.
     /// </summary>
@@ -49,81 +33,11 @@ public partial class WindowMain : Window
         InitializeComponent();
         setApplicationVersioninTitle(); // Set application title using assembly metadata
         Globals.InitConfigs(); // Load global config values
-        loadDBValue();
 
         titleTextBlock.Text = Globals.MainTitle;
         subtitleTextBlock.Text = Globals.SubTitle;
 
-        MainView.MainContext(this);
-
-        LogView.DataContext = MainView.DataContext;
-
-        transitionControl.Content = MainView; // Set initial view
-    }
-
-    private void loadDBValue()
-    {
-        List<generalDataClass> getAllDBData = databaseHelper.GetAllDataFromTable("GeneralSettings");
-        generalDataClass SomeKey = databaseHelper.GetKeyValue("SomeKey", new generalDataClass
-        {
-            ID = 0,
-            Name = "SomeKey",
-            JSON = "{Some JSON}",
-            AnyData = "some default value"
-        });
-        //Test Code
-        // databaseHelper.InsertUpdateInTable(new generalDataClass
-        // {
-        //     ID = 0,
-        //     Name = "SomeOtherKey",
-        //     JSON = "{Some Other JSON}",
-        //     AnyData = "some other default value"
-        // }, "GeneralSettings");
-
-        generalDataClass SomeOtherKey = databaseHelper.GetKeyValue("SomeOtherKey", new generalDataClass
-        {
-            ID = 0,
-            Name = "SomeOtherKey",
-            JSON = "{Some Other JSON test}",
-            AnyData = "some other default value test"
-        });
-    }
-
-    /// <summary>
-    /// Handles selection change for the sidebar menu and switches views accordingly.
-    /// </summary>
-    private void SelectingItemsControl_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        if (sender is not ListBox list)
-            return;
-        if (transitionControl is null)
-            return;
-
-        object? selectedItem = null;
-        if (e.AddedItems is { Count: > 0 })
-            selectedItem = e.AddedItems[0];
-        else
-            selectedItem = list.SelectedItem;
-
-        if (selectedItem is null)
-            return;
-
-        string? viewKey = null;
-
-        if (selectedItem is ListBoxItem listBoxItem)
-            viewKey = listBoxItem.Tag?.ToString();
-        else if (selectedItem is StackPanel stackPanel && stackPanel.Children.Count > 1 && stackPanel.Children[1] is TextBlock label)
-            viewKey = label.Text;
-
-        if (string.IsNullOrWhiteSpace(viewKey))
-            return;
-
-        if (viewKey.Contains("Main View", StringComparison.OrdinalIgnoreCase) || viewKey.Equals("MainView", StringComparison.OrdinalIgnoreCase))
-            transitionControl.Content = MainView;
-        else if (viewKey.Contains("Log View", StringComparison.OrdinalIgnoreCase) || viewKey.Equals("LogView", StringComparison.OrdinalIgnoreCase))
-            transitionControl.Content = LogView;
-        else if (viewKey.Contains("Chat", StringComparison.OrdinalIgnoreCase) || viewKey.Equals("ChatView", StringComparison.OrdinalIgnoreCase))
-            transitionControl.Content = ChatView;
+        transitionControl.Content = ChatView; // Set initial view
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
