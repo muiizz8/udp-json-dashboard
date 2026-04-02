@@ -58,4 +58,7 @@
 		<PackageReference Include="sqlite-net-pcl" Version="1.10.196-beta" />
 		<PackageReference Include="Lib.Harmony" Version="2.4.2" />
 	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ChatCore\ChatCore.csproj" />
+	</ItemGroup>
 </Project>

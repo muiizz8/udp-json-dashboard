@@ -1,4 +1,4 @@
-namespace ChatApplication.Common;
+namespace ChatCore.Models;
 
 /// <summary>
 /// Represents a single TCP instance configuration.

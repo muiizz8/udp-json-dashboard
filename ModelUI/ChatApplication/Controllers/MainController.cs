@@ -3,19 +3,21 @@ using System.Collections.ObjectModel;
 using Avalonia.Controls.Notifications;
 using Avalonia.Threading;
 using ChatApplication.Common;
-using ChatApplication.Network;
+using ChatApplication.Implementations.Config;
+using ChatApplication.Implementations.Transports;
+using ChatCore.Models;
 using Newtonsoft.Json;
 
 namespace ChatApplication.Controllers;
 
 public sealed class MainController
 {
-    private readonly IniConfigService _config;
+    private readonly IniConfigProvider _config;
     private readonly ObservableCollection<LogEntry> _logs;
     private readonly ObservableCollection<string> _debugLines;
     private readonly ObservableCollection<InstanceConfig> _instances;
 
-    private UdpMessagingService _udp = null!;
+    private UdpTransport _udp = null!;
     private bool _isServerRunning;
 
     public InstanceConfig? SelectedInstance { get; private set; }
@@ -28,7 +30,7 @@ public sealed class MainController
         ObservableCollection<string> debugLines,
         ObservableCollection<InstanceConfig> instances)
     {
-        _config = new IniConfigService();
+        _config = new IniConfigProvider();
         _logs = logs;
         _debugLines = debugLines;
         _instances = instances;
@@ -41,7 +43,12 @@ public sealed class MainController
         RecreateUdpService();
         if (!EnsureUdpReady("start server")) return;
 
-        _udp.StartServer();
+        if (SelectedInstance == null) { AddDebug("No instance selected."); return; }
+        if (!TryParsePort(SelectedInstance.LocalPort, out var localPort))
+        {
+            AddDebug("Invalid local port."); return;
+        }
+        _udp.StartServer(SelectedInstance.LocalIp, localPort);
         _isServerRunning = true;
         NotifyInfo("Server started.", "Server");
     }
@@ -136,7 +143,7 @@ public sealed class MainController
     private void LoadConfig()
     {
         _instances.Clear();
-        foreach (var instance in _config.LoadInstances())
+        foreach (var instance in _config.GetInstances())
             _instances.Add(instance);
         SelectedInstance = _instances.Count > 0 ? _instances[0] : null;
     }
@@ -157,9 +164,10 @@ public sealed class MainController
             AddDebug("Invalid port in selected instance. Using defaults 9000/9001.");
         }
 
-        _udp = new UdpMessagingService(
-            SelectedInstance.LocalIp, localPort,
-            SelectedInstance.RemoteIp, remotePort);
+        _udp = new UdpTransport();
+
+        // Wire up remote endpoint so Send() knows where to deliver
+        _udp.Connect(SelectedInstance.RemoteIp, remotePort);
 
         AddDebug($"UDP service ready. Local={SelectedInstance.LocalIp}:{localPort} Remote={SelectedInstance.RemoteIp}:{remotePort}");
 
@@ -180,7 +188,7 @@ public sealed class MainController
             });
         };
 
-        _udp.Debug += message => Dispatcher.UIThread.Post(() => AddDebug(message));
+        _udp.DebugMessage += message => Dispatcher.UIThread.Post(() => AddDebug(message));
     }
 
     private void RecreateUdpService()
@@ -192,9 +200,10 @@ public sealed class MainController
         _isServerRunning = false;
         CreateUdpService();
 
-        if (wasRunning && _udp is not null)
+        if (wasRunning && _udp is not null && SelectedInstance != null &&
+            TryParsePort(SelectedInstance.LocalPort, out var localPort))
         {
-            _udp.StartServer();
+            _udp.StartServer(SelectedInstance.LocalIp, localPort);
             _isServerRunning = true;
         }
     }

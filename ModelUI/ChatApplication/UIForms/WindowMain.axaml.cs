@@ -5,7 +5,9 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Database;
-using ChatApplication.Views;
+using ChatApplication.UI.Views;
+using ChatApplication.Common;
+using ChatApplication.Implementations.Storage;
 using System;
 using System.ComponentModel;
 using System.Reflection;
@@ -22,7 +24,7 @@ public partial class WindowMain : Window
     /// </summary>
     public ChatView ChatView = new ChatView();
 
-    public DatabaseHelper databaseHelper = new DatabaseHelper();
+    public SqliteChatStorage databaseHelper = new SqliteChatStorage();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowMain"/> class.
